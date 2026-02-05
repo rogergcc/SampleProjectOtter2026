@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.rogergcc.sampleprojectotter2026.ui.composables.CityHomeScreen
 import com.rogergcc.sampleprojectotter2026.ui.theme.SampleProjectOtter2026Theme
 
 class MainActivity : ComponentActivity() {
@@ -20,9 +22,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             SampleProjectOtter2026Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                    CityHomeScreen(
+                        modifier = Modifier.padding(innerPadding),
                     )
                 }
             }
@@ -30,18 +31,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     SampleProjectOtter2026Theme {
-        Greeting("Android")
+        CityHomeScreen(
+            modifier = Modifier.padding(16.dp),
+            preview = true
+        )
     }
 }
