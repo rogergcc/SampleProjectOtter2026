@@ -1,6 +1,5 @@
-package com.jotadev.jetcompose_2024_ii_ecoeats.presentation.preview
+package com.rogergcc.sampleprojectotter2026.ui.preview
 
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 
 @Preview(
