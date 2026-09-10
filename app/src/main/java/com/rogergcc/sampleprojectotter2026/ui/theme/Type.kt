@@ -1,6 +1,7 @@
 package com.rogergcc.sampleprojectotter2026.ui.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -10,6 +11,7 @@ import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.rogergcc.sampleprojectotter2026.R
+import com.rogergcc.sampleprojectotter2026.ui.theme.AppDimens
 
 // 1. Fuentes del proyecto
 val OswaldFontFamily = FontFamily(
@@ -24,17 +26,34 @@ val MontserratFontFamily = FontFamily(
 
 // 2. Definición centralizada de TextStyles predeterminados para Tickets
 object TicketTypography {
+    val FolioCode = TextStyle(
+        fontSize = AppDimens.Dim9sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.White.copy(alpha = 0.75f),
+        letterSpacing = 1.sp,
+//        fontFamily = MontserratFontFamily
+//        fontFamily = MontserratFontFamily
+
+    )
+    val Zone = TextStyle(
+        fontSize = AppDimens.Dim9sp,
+        fontWeight = FontWeight.ExtraBold,
+        color = Color.Black,
+        fontFamily = OswaldFontFamily
+
+    )
+
     val TourSubtitle = TextStyle(
         fontSize = 12.sp,
         fontWeight = FontWeight.Bold,
         letterSpacing = 1.5.sp,
         fontFamily = MontserratFontFamily
     )
-    val MainTitle = TextStyle(
-        fontSize = 36.sp,
-        fontWeight = FontWeight.Black,
-        fontFamily = OswaldFontFamily
-    )
+//    val MainTitle = TextStyle(
+//        fontSize = 36.sp,
+//        fontWeight = FontWeight.Black,
+//        fontFamily = OswaldFontFamily
+//    )
     val EventDate = TextStyle(
         fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold,
@@ -57,6 +76,15 @@ object TicketTypography {
         fontWeight = FontWeight.ExtraBold,
         fontFamily = OswaldFontFamily
     )
+    val Fan = TextStyle(
+        fontSize = 10.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.White,
+        letterSpacing = 0.5.sp,
+        fontFamily = MontserratFontFamily,
+
+    )
+
 }
 
 // Set of Material typography styles to start with

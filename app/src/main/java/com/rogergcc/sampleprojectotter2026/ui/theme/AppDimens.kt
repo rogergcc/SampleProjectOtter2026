@@ -6,9 +6,12 @@ package com.rogergcc.sampleprojectotter2026.ui.theme
  * year 2026 .
  */
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 object AppDimens {
+    val Padding3dp: Dp = 3.dp
     val PaddingSmall: Dp = 4.dp
     val PaddingMedium: Dp = 8.dp
     val PaddingLarge: Dp = 16.dp
@@ -17,6 +20,9 @@ object AppDimens {
 
     val MaxTicketWidth: Dp = 340.dp
     val FooterIllustrationHeight: Dp = 165.dp
+
+    val Dim9sp: TextUnit = 9.sp
+    val Dim15sp: TextUnit = 15.sp
 
     // Cortes por defecto
     const val DefaultTeethCount: Int = 10

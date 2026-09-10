@@ -1,23 +1,30 @@
 package com.rogergcc.sampleprojectotter2026.ui.composables
 
-import android.R.attr.rotationX
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -33,6 +40,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.rogergcc.sampleprojectotter2026.ui.helpers.RandomGlitterOverlay
 import com.rogergcc.sampleprojectotter2026.ui.helpers.addSideNotch
@@ -47,7 +55,6 @@ import com.rogergcc.sampleprojectotter2026.ui.model.TicketHologramConfig
 import com.rogergcc.sampleprojectotter2026.ui.model.TicketModel
 import com.rogergcc.sampleprojectotter2026.ui.model.TopCutType
 import com.rogergcc.sampleprojectotter2026.ui.theme.AppDimens
-import java.nio.file.Files.size
 
 
 /**
@@ -97,7 +104,7 @@ fun CommemorativeTicketCard(
 // En la capa del fondo de Compose
 
             // 1. Capa de Contenido Tipográfico e Ilustraciones
-            TicketContentLayout(ticket = ticket)
+            TicketContentLayoutDatFan(ticket = ticket)
 
 
 
@@ -305,6 +312,176 @@ private fun BoxScope.TicketTextureOverlay(
             rollProvider = rollProvider,
             modifier = modifier.matchParentSize()
         )
+    }
+}
+
+@Composable
+private fun TicketContentLayoutDatFan(
+    ticket: TicketModel,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Contenedor principal con paddings internos
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .padding(
+                    top = AppDimens.TicketTopPadding,
+                    start = AppDimens.PaddingMedium,
+                    end = AppDimens.PaddingMedium
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // ==========================================
+            // 0. CABECERA TÉCNICA (Folio a la Izq, Zona a la Der)
+            // ==========================================
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 4.dp, vertical = 2.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // 1. Folio Code (Posición 1 - Esquina Superior Izquierda)
+                ticket.folioCode?.let { folio ->
+                    Text(
+                        text = folio.uppercase(),
+                        style = ticket.styleConfig.folioCodeStyle
+                    )
+                } ?: Spacer(modifier = Modifier.width(1.dp))
+
+                // 2. Zona (Posición 2 - Chip Esquina Superior Derecha)
+                ticket.zoneText?.let { zone ->
+                    Box(
+                        modifier = Modifier
+                            .background(
+                                color = Color(0xFFFFEA00), // Color destacado (o de tu tema)
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                            .padding(horizontal = AppDimens.PaddingMedium, vertical = AppDimens.Padding3dp)
+                    ) {
+                        Text(
+                            text = zone.uppercase(),
+                            style = ticket.styleConfig.zoneStyle,
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            // ==========================================
+            // 1. SECCIÓN ARTISTA / LOGO
+            // ==========================================
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                ticket.artistLogoRes?.let { logoDrawable ->
+                    Image(
+                        painter = painterResource(id = logoDrawable),
+                        contentDescription = "Logo del Artista",
+                        modifier = Modifier
+                            .fillMaxWidth(0.92f)
+                            .wrapContentHeight(),
+                        contentScale = ContentScale.FillWidth
+                    )
+                }
+
+                ticket.subtitleText?.let { subtitle ->
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(
+                        text = subtitle,
+                        style = ticket.styleConfig.tourTitleStyle,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+
+            // ==========================================
+            // 2. SECCIÓN CENTRADA (Fecha, Recinto, Ciudad, Fan)
+            // ==========================================
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        modifier = Modifier.cropVerticalPadding(
+                            fontSize = ticket.styleConfig.dateStyle.fontSize,
+                            cropPercentage = 0.15f
+                        ),
+                        text = ticket.dateText,
+                        style = ticket.styleConfig.dateStyle,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        modifier = Modifier.cropVerticalPadding(
+                            fontSize = ticket.styleConfig.venueStyle.fontSize,
+                            cropPercentage = 0.15f
+                        ),
+                        text = ticket.venueText,
+                        style = ticket.styleConfig.venueStyle,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        text = ticket.cityText,
+                        style = ticket.styleConfig.cityStyle,
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    // 3. Nombre del Fan (Posición 3 - Badge Central Translúcido)
+                    ticket.fanName?.let { fan ->
+                        Surface(
+                            shape = RoundedCornerShape(16.dp),
+                            color = Color.Black.copy(alpha = 0.45f),
+                            border = BorderStroke(1.dp, Color.White.copy(alpha = 0.25f))
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(6.dp)
+                                        .background(Color(0xFF00E676), CircleShape)
+                                )
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text(
+                                    text = "PASS: ${fan.uppercase()}",
+                                    style = ticket.styleConfig.fanStyle,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // ==========================================
+        // 3. ILUSTRACIÓN DE PIE (Bleed / Borde a Borde)
+        // ==========================================
+        ticket.illustrationRes?.let { illustrationDrawable ->
+            Image(
+                painter = painterResource(id = illustrationDrawable),
+                contentDescription = "Ilustración Ticket",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(AppDimens.FooterIllustrationHeight),
+                contentScale = ContentScale.Crop,
+                alignment = Alignment.BottomCenter
+            )
+        }
     }
 }
 

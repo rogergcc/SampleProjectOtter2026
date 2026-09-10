@@ -1,5 +1,9 @@
 package com.rogergcc.sampleprojectotter2026
 
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,6 +12,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,11 +22,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.core.content.FileProvider
 import com.rogergcc.sampleprojectotter2026.ui.composables.CommemorativeTicketCard
+import com.rogergcc.sampleprojectotter2026.ui.composables.TicketPreviewCaptureBox
+import com.rogergcc.sampleprojectotter2026.ui.composables.rememberSimulatedOrRealSensors
 import com.rogergcc.sampleprojectotter2026.ui.composables.rememberTicketSensors
 import com.rogergcc.sampleprojectotter2026.ui.helpers.angledGradient
 import com.rogergcc.sampleprojectotter2026.ui.model.FoilPatternType
@@ -40,6 +52,8 @@ import com.rogergcc.sampleprojectotter2026.ui.theme.GorillazSecondary
 import com.rogergcc.sampleprojectotter2026.ui.theme.GorillazTextLight
 import com.rogergcc.sampleprojectotter2026.ui.theme.SampleProjectOtter2026Theme
 import com.rogergcc.sampleprojectotter2026.ui.theme.TicketTypography
+import java.io.File
+import java.io.FileOutputStream
 
 // 1. Definis el modelo totalmente parametrizado
 val gorillazTicketConfig = TicketModel(
@@ -177,45 +191,108 @@ fun obtainRandomTicketConfig(): TicketModel {
     return ticketOptions.random()
 }
 class MainActivity : ComponentActivity() {
+
+    // 1. Inicializamos la variable leyendo directamente el Intent con el que se abrió la app
+    private var deepLinkUri = mutableStateOf<Uri?>(null)
+
+    // Se ejecuta cuando la app YA estaba abierta y tocas un nuevo enlace
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        deepLinkUri.value = intent.data // Actualiza la UI de inmediato
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Asignamos el Intent inicial si existe (Apertura desde cero)
+        deepLinkUri.value = intent?.data
         enableEdgeToEdge()
         setContent {
-            // 1. Observamos el estado del giroscopio
-            val sensorState by rememberTicketSensors()
-            // ✅ CORRECTO: Se ejecuta una sola vez cuando el Composable entra en la composición
-//            val randomTicket = remember { obtainRandomTicketConfig() }
 
-            // 2. Lista ordenada de tus configuraciones
-            val ticketList = remember {
-                listOf(
-                    gorillazTicketConfig,
-                    blackEyedPeasTicketConfig,
-                    airbagTicketConfig2
+//            // 1. Observamos el estado del giroscopio
+//            val sensorState by rememberTicketSensors()
+//            // 2. Lista ordenada de tus configuraciones
+//            val ticketList = remember {
+//                listOf(
+//                    gorillazTicketConfig,
+//                    blackEyedPeasTicketConfig,
+//                    airbagTicketConfig2
+//                )
+//            }
+//            // 3. Estado para controlar el índice actual (Inicia en 0)
+//            var currentIndex by remember { mutableStateOf(0) }
+//            // 4. Obtenemos el ticket según el índice actual
+//            val currentTicket = ticketList[currentIndex]
+
+            // 1. Estado para conmutar entre animación automática y sensor real
+            var isAutoAnimate by remember { mutableStateOf(true) }
+
+            // 2. Extraemos los parámetros de la URL
+            val uri = deepLinkUri.value
+            val fanParam = uri?.getQueryParameter("fan") ?: "CARLOS MENDOZA"
+            val zoneParam = uri?.getQueryParameter("zone") ?: "CAMPO A - VIP"
+            val folioParam = uri?.getQueryParameter("folio") ?: "#GTZ-2026-0001"
+
+            // 2. Inyectamos los datos dinámicos a la configuración de Gorillaz
+            val currentTicket = remember(fanParam, zoneParam, folioParam) {
+                gorillazTicketConfig.copy(
+                    fanName = fanParam,
+                    zoneText = zoneParam,
+                    folioCode = folioParam
                 )
             }
-            // 3. Estado para controlar el índice actual (Inicia en 0)
-            var currentIndex by remember { mutableStateOf(0) }
 
-            // 4. Obtenemos el ticket según el índice actual
-            val currentTicket = ticketList[currentIndex]
+            // 3. Lectura de sensores reales y simulación animada
+            val sensorState by rememberTicketSensors()
+            val activeRotation by rememberSimulatedOrRealSensors(
+                isAutoAnimate = isAutoAnimate,
+                realPitch = sensorState.pitch,
+                realRoll = sensorState.roll
+            )
 
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFF121212))
-                    .clickable {
-                        // Incrementa el índice y reinicia a 0 al llegar al final
-                        currentIndex = (currentIndex + 1) % ticketList.size
-                    },
+                    .background(Color(0xFF121212)),
+//                    .clickable {
+//                        // Incrementa el índice y reinicia a 0 al llegar al final
+//                        currentIndex = (currentIndex + 1) % ticketList.size
+//                    },
                 contentAlignment = Alignment.Center
 
             ) {
-                // Pasamos las lecturas como lambdas para deferir la ejecución a la Fase de Draw
-                CommemorativeTicketCard(
-                    ticket = currentTicket,
-                    pitchProvider = { sensorState.pitch },
-                    rollProvider = { sensorState.roll }
+                // 4. Wrapper de captura de Bitmap alrededor de la tarjeta
+                TicketPreviewCaptureBox(
+                    onBitmapExported = { bitmap ->
+                        saveAndShareScreenshot(this@MainActivity, bitmap)
+                    }
+                ) { graphicsLayer ->
+                    CommemorativeTicketCard(
+                        modifier = Modifier.drawWithContent {
+                            graphicsLayer.record {
+                                this@drawWithContent.drawContent()
+                            }
+                            drawContent()
+                        },
+                        ticket = currentTicket,
+                        pitchProvider = { activeRotation.first },
+                        rollProvider = { activeRotation.second }
+                    )
+                }
+
+                // 5. Interruptor flotante inferior
+                FilterChip(
+                    selected = isAutoAnimate,
+                    onClick = { isAutoAnimate = !isAutoAnimate },
+                    label = {
+                        Text(
+                            text = if (isAutoAnimate) "Modo: Auto Giro" else "Modo: Sensor Real",
+                            color = Color.White
+                        )
+                    },
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 24.dp)
                 )
             }
         }
@@ -250,8 +327,18 @@ fun TicketGorillazPreview() {
 @Composable
 fun TicketAirbagPreview() {
     SampleProjectOtter2026Theme {
-        // Observamos el estado del giroscopio
+        // 1. Estado para conmutar entre animación automática y sensor real
+        var isAutoAnimate by remember { mutableStateOf(true) }
+        // 4. Lectura de sensores reales y simulación animada
         val sensorState by rememberTicketSensors()
+
+        // Observamos el estado del giroscopio
+        val activeRotation by rememberSimulatedOrRealSensors(
+            isAutoAnimate = isAutoAnimate,
+            realPitch = sensorState.pitch,
+            realRoll = sensorState.roll
+        )
+
 
         Box(
             modifier = Modifier
@@ -259,12 +346,13 @@ fun TicketAirbagPreview() {
                 .background(Color(0xFF121212)),
             contentAlignment = Alignment.Center
         ) {
-            // Pasamos las lecturas como lambdas para deferir la ejecución a la Fase de Draw
             CommemorativeTicketCard(
                 ticket = airbagTicketConfig2,
-                pitchProvider = { sensorState.pitch },
-                rollProvider = { sensorState.roll }
+                pitchProvider = { activeRotation.first },
+                rollProvider = { activeRotation.second }
             )
+
+
         }
     }
 }
@@ -315,5 +403,31 @@ fun TablaControlDeDisenoPreview() {
                 rollProvider = { sensorState.roll }
             )
         }
+    }
+}
+
+fun saveAndShareScreenshot(context: Context, bitmap: Bitmap) {
+    try {
+        val cachePath = File(context.cacheDir, "images")
+        cachePath.mkdirs()
+        val file = File(cachePath, "ticket_preview.png")
+        val stream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        stream.close()
+
+        val contentUri: Uri = FileProvider.getUriForFile(
+            context,
+            "${context.packageName}.fileprovider",
+            file
+        )
+
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "image/png"
+            putExtra(Intent.EXTRA_STREAM, contentUri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        context.startActivity(Intent.createChooser(shareIntent, "Compartir Vista Previa"))
+    } catch (e: Exception) {
+        e.printStackTrace()
     }
 }

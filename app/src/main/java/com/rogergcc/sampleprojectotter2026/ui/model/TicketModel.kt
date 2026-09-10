@@ -48,7 +48,7 @@ data class TicketModel(
     val hologramConfig: TicketHologramConfig = TicketHologramConfig(),
     val zoneText: String? = "CAMPO A - VIP",
     val fanName: String? = "CARLOS MENDOZA",
-    val folioText: String? = "#GTZ-2026-00892"
+    val folioCode: String? = "#GTZ-2026-00892"
 )
 
 @Immutable // Opcional pero recomendado para Jetpack Compose
@@ -64,11 +64,13 @@ data class TicketCutStyle(
     val bottomCornerRadius: Float = 24f
 )
 data class TicketStyleConfig(
+    val folioCodeStyle : TextStyle = TicketTypography.FolioCode,
+    val zoneStyle: TextStyle = TicketTypography.Zone,
     val tourTitleStyle: TextStyle = TicketTypography.TourSubtitle,
-    val mainTitleStyle: TextStyle = TicketTypography.MainTitle,
     val dateStyle: TextStyle = TicketTypography.EventDate,
     val venueStyle: TextStyle = TicketTypography.Venue,
     val cityStyle: TextStyle = TicketTypography.City,
+    val fanStyle: TextStyle = TicketTypography.Fan,
     val dividerColor: Color = TicketDarkBackground,
     val dividerThickness: Dp = 2.dp,
     val dividerFraction: Float = 0.9f
