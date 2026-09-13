@@ -75,3 +75,16 @@ data class TicketStyleConfig(
     val dividerThickness: Dp = 2.dp,
     val dividerFraction: Float = 0.9f
 )
+
+// Objeto utilitario con estilos reutilizables
+object TicketDefaults {
+    val StandardCutStyle = TicketCutStyle(
+        topCutType = TopCutType.CONCAVE_TEETH,
+        topTeethCount = 10,
+        topCutDepth = 33f,
+        teethSpacing = 16f,
+        cornerCutRadius = 24f,
+        showSideNotches = true,
+        sideNotchRadius = 33f
+    )
+}
