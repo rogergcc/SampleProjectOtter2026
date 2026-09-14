@@ -62,9 +62,9 @@ val gorillazTicketConfig = TicketModel(
 
 val blackEyedPeasTicketConfig = TicketModel(
     mainTitleText = "BLACK EYED PEAS",
-    subtitleText = "ELEVATION WORLD TOUR 2026",
-    dateText = "VIERNES 18 DE DICIEMBRE",
-    venueText = "ESTADIO NACIONAL",
+    subtitleText = "",
+    dateText = "MIERCOLES 02 DE SETIEMBRE",
+    venueText = "Arena 1 Park",
     cityText = "LIMA, PERÚ",
     artistLogoRes = R.drawable.bep_logo,
     illustrationRes = R.drawable.bep_footer_9,

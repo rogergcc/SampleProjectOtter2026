@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import com.rogergcc.sampleprojectotter2026.ui.composables.card.CollectionHistoryCard
 import com.rogergcc.sampleprojectotter2026.ui.tickets.airbagTicketConfig2
 import com.rogergcc.sampleprojectotter2026.ui.tickets.blackEyedPeasTicketConfig
 import com.rogergcc.sampleprojectotter2026.ui.tickets.CommemorativeTicketCard
@@ -49,11 +50,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            CollectionTickets(
-                deepLinkUri = deepLinkUri.value,
-                onExportRequested = { bitmap ->
-                    saveAndShareScreenshot(this@MainActivity, bitmap)
-                }
+//            CollectionTickets(
+//                deepLinkUri = deepLinkUri.value,
+//                onExportRequested = { bitmap ->
+//                    saveAndShareScreenshot(this@MainActivity, bitmap)
+//                }
+//            )
+            CollectionHistoryCard(
+                modifier = Modifier
             )
 
 

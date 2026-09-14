@@ -48,8 +48,8 @@ fun CollectionTickets(
     val tickets = remember(fanParam, zoneParam, folioParam) {
         listOf(
             gorillazTicketConfig.copy(fanName = fanParam, zoneText = zoneParam, folioCode = folioParam),
-            airbagTicketConfig2.copy(fanName = fanParam, zoneText = "CAMPO A - VIP", folioCode = "#GTZ-2026-0001"),
-            blackEyedPeasTicketConfig.copy(fanName = fanParam, zoneText = "CAMPO B - GENERAL", folioCode = "#GTZ-2026-0002")
+            airbagTicketConfig2.copy(fanName = fanParam, zoneText = "CAMPO A - VIP", folioCode = "#GTZ-2026-0002"),
+            blackEyedPeasTicketConfig.copy(fanName = fanParam, zoneText = "CAMPO B - GENERAL", folioCode = "#GTZ-2026-0003")
         )
     }
 
