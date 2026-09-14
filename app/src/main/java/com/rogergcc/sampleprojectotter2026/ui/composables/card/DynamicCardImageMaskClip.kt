@@ -1,4 +1,4 @@
-package com.rogergcc.sampleprojectotter2026.ui.composables
+package com.rogergcc.sampleprojectotter2026.ui.composables.card
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween

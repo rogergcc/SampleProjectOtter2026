@@ -1,4 +1,4 @@
-package com.rogergcc.sampleprojectotter2026.ui.helpers
+package com.rogergcc.sampleprojectotter2026.ui.tickets
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.unit.TextUnit
-import com.rogergcc.sampleprojectotter2026.ui.model.TicketHologramConfig
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin

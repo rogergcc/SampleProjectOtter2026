@@ -1,4 +1,4 @@
-package com.rogergcc.sampleprojectotter2026.ui.model
+package com.rogergcc.sampleprojectotter2026.ui.tickets
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Immutable
@@ -63,6 +63,8 @@ data class TicketCutStyle(
     val sideNotchYRatio: Float = 0.52f,
     val bottomCornerRadius: Float = 24f
 )
+
+@Immutable // FIX: Garantiza que Compose pueda omitir la recomposición de textos sin cambios
 data class TicketStyleConfig(
     val folioCodeStyle : TextStyle = TicketTypography.FolioCode,
     val zoneStyle: TextStyle = TicketTypography.Zone,

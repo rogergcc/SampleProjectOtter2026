@@ -1,14 +1,8 @@
-package com.rogergcc.sampleprojectotter2026.ui
+package com.rogergcc.sampleprojectotter2026.ui.tickets
 
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import com.rogergcc.sampleprojectotter2026.R
-import com.rogergcc.sampleprojectotter2026.ui.helpers.angledGradient
-import com.rogergcc.sampleprojectotter2026.ui.model.FoilPatternType
-import com.rogergcc.sampleprojectotter2026.ui.model.TicketDefaults
-import com.rogergcc.sampleprojectotter2026.ui.model.TicketHologramConfig
-import com.rogergcc.sampleprojectotter2026.ui.model.TicketModel
-import com.rogergcc.sampleprojectotter2026.ui.model.TicketStyleConfig
 import com.rogergcc.sampleprojectotter2026.ui.theme.AirbagGradientEnd
 import com.rogergcc.sampleprojectotter2026.ui.theme.AirbagGradientStart
 import com.rogergcc.sampleprojectotter2026.ui.theme.AirbagPrimary

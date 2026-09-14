@@ -1,4 +1,4 @@
-package com.rogergcc.sampleprojectotter2026.data
+package com.rogergcc.sampleprojectotter2026.ui.crypto
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable

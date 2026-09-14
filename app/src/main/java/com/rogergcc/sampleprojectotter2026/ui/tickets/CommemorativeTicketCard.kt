@@ -1,4 +1,4 @@
-package com.rogergcc.sampleprojectotter2026.ui.composables
+package com.rogergcc.sampleprojectotter2026.ui.tickets
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
@@ -42,18 +42,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.rogergcc.sampleprojectotter2026.ui.helpers.RandomGlitterOverlay
-import com.rogergcc.sampleprojectotter2026.ui.helpers.addSideNotch
-import com.rogergcc.sampleprojectotter2026.ui.helpers.cropVerticalPadding
-import com.rogergcc.sampleprojectotter2026.ui.helpers.drawDiamondCrystalPattern
-import com.rogergcc.sampleprojectotter2026.ui.helpers.drawLiquidOilSlatePattern
-import com.rogergcc.sampleprojectotter2026.ui.helpers.drawRainbowGlassPattern
-import com.rogergcc.sampleprojectotter2026.ui.helpers.drawStarFoilPattern
-import com.rogergcc.sampleprojectotter2026.ui.model.FoilPatternType
-import com.rogergcc.sampleprojectotter2026.ui.model.TicketCutStyle
-import com.rogergcc.sampleprojectotter2026.ui.model.TicketHologramConfig
-import com.rogergcc.sampleprojectotter2026.ui.model.TicketModel
-import com.rogergcc.sampleprojectotter2026.ui.model.TopCutType
 import com.rogergcc.sampleprojectotter2026.ui.theme.AppDimens
 
 
@@ -485,102 +473,102 @@ private fun TicketContentLayoutDatFan(
     }
 }
 
-@Composable
-private fun TicketContentLayout(
-    ticket: TicketModel,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // Contenedor interno con Padding para el Texto y Logo
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .padding(
-                    top = AppDimens.TicketTopPadding,
-                    start = AppDimens.PaddingMedium,
-                    end = AppDimens.PaddingMedium
-                ),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // 1. SECCIÓN CABECERA
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                ticket.artistLogoRes?.let { logoDrawable ->
-                    Image(
-                        painter = painterResource(id = logoDrawable),
-                        contentDescription = "Logo del Artista",
-                        modifier = Modifier
-                            .fillMaxWidth(0.98f)
-                            .wrapContentHeight(),
-                        contentScale = ContentScale.FillWidth
-                    )
-                }
-
-                ticket.subtitleText?.let { subtitle ->
-                    Spacer(modifier = Modifier.height(2.dp))
-                    Text(
-                        text = subtitle,
-                        style = ticket.styleConfig.tourTitleStyle,
-                        textAlign = TextAlign.Center
-                    )
-                }
-            }
-
-            // 2. SECCIÓN CENTRADA (Fecha, Recinto, Ciudad)
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                contentAlignment = Alignment.Center
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        modifier = Modifier.cropVerticalPadding(
-                            fontSize = ticket.styleConfig.venueStyle.fontSize,
-                            cropPercentage = 0.15f
-                        ),
-                        text = ticket.dateText,
-                        style = ticket.styleConfig.dateStyle,
-                        textAlign = TextAlign.Center
-                    )
-                    Text(
-                        modifier = Modifier.cropVerticalPadding(
-                            fontSize = ticket.styleConfig.venueStyle.fontSize,
-                            cropPercentage = 0.15f
-                        ),
-                        text = ticket.venueText,
-                        style = ticket.styleConfig.venueStyle,
-                        textAlign = TextAlign.Center
-                    )
-                    Text(
-                        text = ticket.cityText,
-                        style = ticket.styleConfig.cityStyle,
-                        textAlign = TextAlign.Center
-                    )
-                }
-            }
-        }
-
-        // 3. SECCIÓN INFERIOR: Sin paddings para lograr el efecto de borde a borde (Bleed)
-        ticket.illustrationRes?.let { illustrationDrawable ->
-            Image(
-                painter = painterResource(id = illustrationDrawable),
-                contentDescription = "Ilustración Ticket",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(AppDimens.FooterIllustrationHeight),
-                contentScale = ContentScale.Crop, // O ContentScale.FillWidth segun el aspect ratio de tu PNG
-                alignment = Alignment.BottomCenter
-            )
-        }
-    }
-}
+//@Composable
+//private fun TicketContentLayout(
+//    ticket: TicketModel,
+//    modifier: Modifier = Modifier
+//) {
+//    Column(
+//        modifier = modifier.fillMaxSize(),
+//        horizontalAlignment = Alignment.CenterHorizontally
+//    ) {
+//        // Contenedor interno con Padding para el Texto y Logo
+//        Column(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .weight(1f)
+//                .padding(
+//                    top = AppDimens.TicketTopPadding,
+//                    start = AppDimens.PaddingMedium,
+//                    end = AppDimens.PaddingMedium
+//                ),
+//            horizontalAlignment = Alignment.CenterHorizontally
+//        ) {
+//            // 1. SECCIÓN CABECERA
+//            Column(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//                ticket.artistLogoRes?.let { logoDrawable ->
+//                    Image(
+//                        painter = painterResource(id = logoDrawable),
+//                        contentDescription = "Logo del Artista",
+//                        modifier = Modifier
+//                            .fillMaxWidth(0.98f)
+//                            .wrapContentHeight(),
+//                        contentScale = ContentScale.FillWidth
+//                    )
+//                }
+//
+//                ticket.subtitleText?.let { subtitle ->
+//                    Spacer(modifier = Modifier.height(2.dp))
+//                    Text(
+//                        text = subtitle,
+//                        style = ticket.styleConfig.tourTitleStyle,
+//                        textAlign = TextAlign.Center
+//                    )
+//                }
+//            }
+//
+//            // 2. SECCIÓN CENTRADA (Fecha, Recinto, Ciudad)
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .weight(1f),
+//                contentAlignment = Alignment.Center
+//            ) {
+//                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+//                    Text(
+//                        modifier = Modifier.cropVerticalPadding(
+//                            fontSize = ticket.styleConfig.venueStyle.fontSize,
+//                            cropPercentage = 0.15f
+//                        ),
+//                        text = ticket.dateText,
+//                        style = ticket.styleConfig.dateStyle,
+//                        textAlign = TextAlign.Center
+//                    )
+//                    Text(
+//                        modifier = Modifier.cropVerticalPadding(
+//                            fontSize = ticket.styleConfig.venueStyle.fontSize,
+//                            cropPercentage = 0.15f
+//                        ),
+//                        text = ticket.venueText,
+//                        style = ticket.styleConfig.venueStyle,
+//                        textAlign = TextAlign.Center
+//                    )
+//                    Text(
+//                        text = ticket.cityText,
+//                        style = ticket.styleConfig.cityStyle,
+//                        textAlign = TextAlign.Center
+//                    )
+//                }
+//            }
+//        }
+//
+//        // 3. SECCIÓN INFERIOR: Sin paddings para lograr el efecto de borde a borde (Bleed)
+//        ticket.illustrationRes?.let { illustrationDrawable ->
+//            Image(
+//                painter = painterResource(id = illustrationDrawable),
+//                contentDescription = "Ilustración Ticket",
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(AppDimens.FooterIllustrationHeight),
+//                contentScale = ContentScale.Crop, // O ContentScale.FillWidth segun el aspect ratio de tu PNG
+//                alignment = Alignment.BottomCenter
+//            )
+//        }
+//    }
+//}
 
 @Composable
 private fun DefaultGlitterGroup(

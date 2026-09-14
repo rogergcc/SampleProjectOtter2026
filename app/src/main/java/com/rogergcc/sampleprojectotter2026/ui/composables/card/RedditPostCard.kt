@@ -1,5 +1,6 @@
-package com.rogergcc.sampleprojectotter2026.ui.composables
+package com.rogergcc.sampleprojectotter2026.ui.composables.card
 
+import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -135,7 +136,7 @@ fun RedditPostCard(
                 ) {
                     IconButton(onClick = onVoteUp, modifier = Modifier.size(32.dp)) {
                         Icon(
-                            painter = painterResource(id = android.R.drawable.arrow_up_float), // Reemplazar por icono personalizado de flecha arriba
+                            painter = painterResource(id = R.drawable.arrow_up_float), // Reemplazar por icono personalizado de flecha arriba
                             contentDescription = "Voto positivo",
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -149,7 +150,7 @@ fun RedditPostCard(
                     )
                     IconButton(onClick = onVoteDown, modifier = Modifier.size(32.dp)) {
                         Icon(
-                            painter = painterResource(id = android.R.drawable.arrow_down_float), // Reemplazar por icono personalizado de flecha abajo
+                            painter = painterResource(id = R.drawable.arrow_down_float), // Reemplazar por icono personalizado de flecha abajo
                             contentDescription = "Voto negativo",
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -168,7 +169,7 @@ fun RedditPostCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        painter = painterResource(id = android.R.drawable.stat_notify_chat), // Reemplazar por icono de bocadillo/comentario
+                        painter = painterResource(id = R.drawable.stat_notify_chat), // Reemplazar por icono de bocadillo/comentario
                         contentDescription = "Comentarios",
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(16.dp)

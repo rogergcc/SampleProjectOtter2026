@@ -1,4 +1,4 @@
-package com.rogergcc.sampleprojectotter2026.ui.helpers
+package com.rogergcc.sampleprojectotter2026.ui.tickets
 
 /**
  * Created on agosto.

@@ -23,8 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rogergcc.sampleprojectotter2026.R
-import com.rogergcc.sampleprojectotter2026.ui.composables.DynamicTicketStudioScreen
-import com.rogergcc.sampleprojectotter2026.ui.composables.RedditPostCard
 
 @Composable
 fun CollectionHistoryCard() {

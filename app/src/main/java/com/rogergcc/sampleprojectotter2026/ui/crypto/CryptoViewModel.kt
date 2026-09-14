@@ -1,9 +1,7 @@
-package com.rogergcc.sampleprojectotter2026.ui.viewmodels
+package com.rogergcc.sampleprojectotter2026.ui.crypto
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rogergcc.sampleprojectotter2026.data.CryptoRepository
-import com.rogergcc.sampleprojectotter2026.data.DashboardUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
