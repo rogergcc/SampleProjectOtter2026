@@ -17,7 +17,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -48,6 +47,19 @@ sealed class CardGalleryItem {
     data class OrganicBird(val title: String) : CardGalleryItem()
     data class Card3d(val badgeTitle: String, val badDescription:String) : CardGalleryItem()
 
+    data class CardGame3d(val gameTitle: String, val gameDescription: String) : CardGalleryItem()
+
+    data class MechaCardStyle(
+        val title: String,
+        val subtitle: String,
+        val category: String,
+        val footerText: String,
+        val japaneseTag: String,
+        val primaryColor: Color,
+        val accentColor: Color,
+        val imageRes: Int,
+    ) : CardGalleryItem()
+
     // Agrega las variantes necesarias
 }
 
@@ -59,13 +71,18 @@ fun CollectionHistoryCard(
     val galleryItems = remember {
         listOf(
             CardGalleryItem.OrganicBird("Birds Panel"),
+
+            CardGalleryItem.StaticMask(R.drawable.img_2, R.drawable.mask_cube_2_padding),
+            CardGalleryItem.StaticMask(R.drawable.img_2, R.drawable.patter_circle_hoja),
+            CardGalleryItem.StaticMask(R.drawable.img_1, R.drawable.vector_mask_pattern),
             CardGalleryItem.DynamicMask(
                 imageUrl = "https://i.pinimg.com/1200x/5f/6e/3f/5f6e3fe28c43c7002edae5eda2ff0ceb.jpg",
                 maskType = 3
             ),
-            CardGalleryItem.StaticMask(R.drawable.img_2, R.drawable.mask_cube_2_padding),
-            CardGalleryItem.StaticMask(R.drawable.img_2, R.drawable.patter_circle_hoja),
-            CardGalleryItem.StaticMask(R.drawable.img_1, R.drawable.vector_mask_pattern),
+            CardGalleryItem.DynamicMask(
+                imageUrl = "https://i.pinimg.com/1200x/5f/6e/3f/5f6e3fe28c43c7002edae5eda2ff0ceb.jpg",
+                maskType = 1
+            ),
             CardGalleryItem.RedditPost(
                 title = "Jetpack Compose en 2026",
                 body = "Optimizando galerías con KISS y DRY.",
@@ -76,9 +93,20 @@ fun CollectionHistoryCard(
                 badgeTitle = "Karma Champion",
                 badDescription = "Obtuviste este sticker tras desbloquear los logros de comunidad de nivel Platino."
             ),
-            CardGalleryItem.DynamicMask(
-                imageUrl = "https://i.pinimg.com/1200x/5f/6e/3f/5f6e3fe28c43c7002edae5eda2ff0ceb.jpg",
-                maskType = 1
+            CardGalleryItem.CardGame3d(
+                gameTitle = "Space Invaders 3D",
+                gameDescription = "Tu puntuación más alta: 12,345 puntos. ¡Sigue así!"
+            ),
+
+            CardGalleryItem.MechaCardStyle(
+                title = "RX-93",
+                subtitle = "GUNDAM",
+                category = "E.F.S.F",
+                footerText = "EARTH - FEDERATION - SPACE - FORCE",
+                japaneseTag = "ボクシー",
+                primaryColor = Color(0xFF2B6CB0),
+                accentColor = Color(0xFFE53E3E),
+                imageRes = R.drawable.gundam_iloveimg_remove
             )
 
         )
@@ -126,6 +154,22 @@ fun CollectionHistoryCard(
                     is CardGalleryItem.Card3d -> RedditSticker3DCard(
                         badgeName = item.badgeTitle,
                         badgeDescription = item.badDescription
+                    )
+                    is CardGalleryItem.CardGame3d -> Reddit3DRecapCard(
+                        title = item.gameTitle,
+                        subtitle = item.gameDescription
+                    )
+                    is CardGalleryItem.MechaCardStyle -> TacticalMechaCard(
+                        config = MechaCardStyle(
+                            title = item.title,
+                            subtitle = item.subtitle,
+                            category = item.category,
+                            footerText = item.footerText,
+                            japaneseTag = item.japaneseTag,
+                            primaryColor = item.primaryColor,
+                            accentColor = item.accentColor,
+                            imageRes = item.imageRes
+                        )
                     )
                 }
             }
