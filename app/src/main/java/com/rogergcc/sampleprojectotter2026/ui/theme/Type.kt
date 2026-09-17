@@ -2,18 +2,22 @@ package com.rogergcc.sampleprojectotter2026.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.rogergcc.sampleprojectotter2026.R
-import com.rogergcc.sampleprojectotter2026.ui.theme.AppDimens
 
 // 1. Fuentes del proyecto
+
+val AntonScFontFamily = FontFamily(
+    Font(R.font.anton_sc_regular, FontWeight.Normal)
+)
+val RubicMonoOneFontFamily = FontFamily(
+    Font(R.font.rubik_mono_one_regular, FontWeight.Normal)
+)
 val OswaldFontFamily = FontFamily(
     Font(R.font.oswald_bold, FontWeight.Bold),
     Font(R.font.oswald_regular, FontWeight.Normal)
@@ -23,6 +27,12 @@ val MontserratFontFamily = FontFamily(
     Font(R.font.montserrat_bold, FontWeight.Bold),
     Font(R.font.montserrat_black, FontWeight.Black)
 )
+
+
+val ArchivoFontFamily = FontFamily(
+    Font(R.font.archivoblack_regular, FontWeight.Normal)
+)
+
 
 // 2. Definición centralizada de TextStyles predeterminados para Tickets
 object TicketTypography {
@@ -49,7 +59,8 @@ object TicketTypography {
         letterSpacing = 1.5.sp,
         fontFamily = MontserratFontFamily
     )
-//    val MainTitle = TextStyle(
+
+    //    val MainTitle = TextStyle(
 //        fontSize = 36.sp,
 //        fontWeight = FontWeight.Black,
 //        fontFamily = OswaldFontFamily
@@ -70,7 +81,7 @@ object TicketTypography {
         // 0.75.em junta las dos líneas al máximo sin colapsar el cálculo del contenedor
         lineHeight = 0.75.em,
 
-    )
+        )
     val City = TextStyle(
         fontSize = 15.sp,
         fontWeight = FontWeight.ExtraBold,
@@ -83,7 +94,7 @@ object TicketTypography {
         letterSpacing = 0.5.sp,
         fontFamily = MontserratFontFamily,
 
-    )
+        )
 
 }
 

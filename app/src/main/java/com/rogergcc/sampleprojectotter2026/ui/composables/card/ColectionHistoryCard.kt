@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
@@ -24,30 +26,51 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.rogergcc.sampleprojectotter2026.R
+import com.rogergcc.sampleprojectotter2026.ui.theme.AntonScFontFamily
 
 sealed class CardGalleryItem {
     data class StaticMask(
         val imageRes: Int,
-        val maskRes: Int
+        val maskRes: Int,
     ) : CardGalleryItem()
 
     data class DynamicMask(
         val imageUrl: String,
-        val maskType: Int
+        val maskType: Int,
     ) : CardGalleryItem()
 
     data class RedditPost(
         val title: String,
         val body: String,
         val author: String,
-        val subreddit: String
+        val subreddit: String,
     ) : CardGalleryItem()
 
     data class OrganicBird(val title: String) : CardGalleryItem()
-    data class Card3d(val badgeTitle: String, val badDescription:String) : CardGalleryItem()
+    data class Card3d(val badgeTitle: String, val badDescription: String) : CardGalleryItem()
 
     data class CardGame3d(val gameTitle: String, val gameDescription: String) : CardGalleryItem()
+    data class TextImageMaskCompose(
+        val title: String,
+        val fontSize: androidx.compose.ui.unit.TextUnit,
+        val imageRes: Int,
+        val fontFamily: androidx.compose.ui.text.font.FontFamily,
+        val modifier: Modifier = Modifier,
+    ) : CardGalleryItem()
+
+    data class TextImageMaskPosterAdjusted(
+        val topTag: String,
+        val topTagLetterSpacing: androidx.compose.ui.unit.TextUnit,
+        val title: String,
+        val titleLetterSpacing: androidx.compose.ui.unit.TextUnit,
+        val titleFontSize: androidx.compose.ui.unit.TextUnit,
+        val subTitle: String,
+        val imageRes: Int,
+        val fontFamilyTitle: androidx.compose.ui.text.font.FontFamily,
+        val modifier: Modifier = Modifier,
+    ) : CardGalleryItem()
 
     data class MechaCardStyle(
         val title: String,
@@ -65,11 +88,12 @@ sealed class CardGalleryItem {
 
 @Composable
 fun CollectionHistoryCard(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     // 1. Datos desacoplados (DRY)
     val galleryItems = remember {
         listOf(
+
             CardGalleryItem.OrganicBird("Birds Panel"),
 
             CardGalleryItem.StaticMask(R.drawable.img_2, R.drawable.mask_cube_2_padding),
@@ -107,7 +131,29 @@ fun CollectionHistoryCard(
                 primaryColor = Color(0xFF2B6CB0),
                 accentColor = Color(0xFFE53E3E),
                 imageRes = R.drawable.gundam_iloveimg_remove
-            )
+            ),
+            CardGalleryItem.TextImageMaskCompose(
+                title = "Tokyo",
+                fontSize = 130.sp,
+                imageRes = R.drawable.img_3,
+                fontFamily = AntonScFontFamily,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp)
+            ),
+            CardGalleryItem.TextImageMaskPosterAdjusted(
+                topTag = "JAPAN",
+                topTagLetterSpacing = 10.sp,
+                title = "TOKYO",
+                titleLetterSpacing = (10.5).sp,
+                titleFontSize = 130.sp,
+                subTitle = "LAND OF THE RISING SUN",
+                imageRes = R.drawable.img_3,
+                fontFamilyTitle = AntonScFontFamily,
+                modifier = Modifier
+                    .height(320.dp)
+                    .fillMaxWidth()
+            ),
 
         )
     }
@@ -123,7 +169,7 @@ fun CollectionHistoryCard(
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(horizontal = 32.dp), // Muestra los bordes de la tarjeta siguiente
+//            contentPadding = PaddingValues(horizontal = 32.dp), // Muestra los bordes de la tarjeta siguiente
             pageSpacing = 16.dp
         ) { page ->
             Box(
@@ -137,10 +183,12 @@ fun CollectionHistoryCard(
                         imageUrl = item.imageUrl,
                         maskType = item.maskType
                     )
+
                     is CardGalleryItem.StaticMask -> CardImageMaskClip(
                         imageResource = item.imageRes,
                         imagePatterSvg = item.maskRes
                     )
+
                     is CardGalleryItem.RedditPost -> RedditPostCard(
                         subreddit = item.subreddit,
                         author = item.author,
@@ -151,14 +199,17 @@ fun CollectionHistoryCard(
                         commentCount = 89,
                         onVoteUp = {}, onVoteDown = {}, onCommentClick = {}, onShareClick = {}
                     )
+
                     is CardGalleryItem.Card3d -> RedditSticker3DCard(
                         badgeName = item.badgeTitle,
                         badgeDescription = item.badDescription
                     )
+
                     is CardGalleryItem.CardGame3d -> Reddit3DRecapCard(
                         title = item.gameTitle,
                         subtitle = item.gameDescription
                     )
+
                     is CardGalleryItem.MechaCardStyle -> TacticalMechaCard(
                         config = MechaCardStyle(
                             title = item.title,
@@ -170,6 +221,26 @@ fun CollectionHistoryCard(
                             accentColor = item.accentColor,
                             imageRes = item.imageRes
                         )
+                    )
+
+                    is CardGalleryItem.TextImageMaskCompose -> TextImageMaskCompose(
+                        title = item.title,
+                        fontSize = item.fontSize,
+                        imageRes = item.imageRes,
+                        fontFamily = item.fontFamily,
+                        modifier = item.modifier
+                    )
+
+                    is CardGalleryItem.TextImageMaskPosterAdjusted -> TextImageMaskPosterAdjusted(
+                        topTag = item.topTag,
+                        topTagLetterSpacing = item.topTagLetterSpacing,
+                        title = item.title,
+                        titleLetterSpacing = item.titleLetterSpacing,
+                        titleFontSize = item.titleFontSize,
+                        subTitle = item.subTitle,
+                        imageRes = item.imageRes,
+                        fontFamilyTitle = item.fontFamilyTitle,
+                        modifier = item.modifier,
                     )
                 }
             }
@@ -190,7 +261,7 @@ fun CollectionHistoryCard(
 private fun PagerIndicator(
     pagerState: PagerState,
     itemCount: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier,
@@ -210,6 +281,7 @@ private fun PagerIndicator(
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun CollectionHistoryCardPreview() {
