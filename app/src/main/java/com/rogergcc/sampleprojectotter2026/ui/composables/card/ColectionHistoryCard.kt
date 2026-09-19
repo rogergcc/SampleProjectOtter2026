@@ -36,6 +36,12 @@ sealed class CardGalleryItem {
         val maskRes: Int,
     ) : CardGalleryItem()
 
+    data class CardMaskFromDrawable(
+        val imageRes: Int,
+        val maskRes: Int,
+        val modifier: Modifier = Modifier,
+    ) : CardGalleryItem()
+
     data class DynamicMask(
         val imageUrl: String,
         val maskType: Int,
@@ -49,6 +55,8 @@ sealed class CardGalleryItem {
     ) : CardGalleryItem()
 
     data class OrganicBird(val title: String) : CardGalleryItem()
+    data class OrganicBirdMaskCard(val imageRes: Int) : CardGalleryItem()
+
     data class Card3d(val badgeTitle: String, val badDescription: String) : CardGalleryItem()
 
     data class CardGame3d(val gameTitle: String, val gameDescription: String) : CardGalleryItem()
@@ -93,12 +101,20 @@ fun CollectionHistoryCard(
     // 1. Datos desacoplados (DRY)
     val galleryItems = remember {
         listOf(
-
+            CardGalleryItem.OrganicBirdMaskCard(
+                imageRes = R.drawable.img_2
+            ),
             CardGalleryItem.OrganicBird("Birds Panel"),
 
             CardGalleryItem.StaticMask(R.drawable.img_2, R.drawable.mask_cube_2_padding),
-            CardGalleryItem.StaticMask(R.drawable.img_2, R.drawable.patter_circle_hoja),
-            CardGalleryItem.StaticMask(R.drawable.img_1, R.drawable.vector_mask_pattern),
+            CardGalleryItem.CardMaskFromDrawable(
+                imageRes = R.drawable.img_2,
+                maskRes = R.drawable.mask_cube_2_padding,
+                modifier = Modifier.size(300.dp)
+                ),
+
+//            CardGalleryItem.StaticMask(R.drawable.img_2, R.drawable.patter_circle_hoja),
+            CardGalleryItem.StaticMask(R.drawable.img_3, R.drawable.vector_mask_pattern),
             CardGalleryItem.DynamicMask(
                 imageUrl = "https://i.pinimg.com/1200x/5f/6e/3f/5f6e3fe28c43c7002edae5eda2ff0ceb.jpg",
                 maskType = 3
@@ -178,12 +194,21 @@ fun CollectionHistoryCard(
             ) {
                 // 3. Renderizado según el tipo de elemento (KISS)
                 when (val item = galleryItems[page]) {
+                    is CardGalleryItem.OrganicBirdMaskCard -> OrganicBirdMaskCard(
+                        imageResource = item.imageRes
+                    )
                     is CardGalleryItem.OrganicBird -> GouldianFinchPanel()
+
                     is CardGalleryItem.DynamicMask -> DynamicTicketStudioScreen(
                         imageUrl = item.imageUrl,
-                        maskType = item.maskType
+                        maskType = item.maskType,
                     )
 
+                    is CardGalleryItem.CardMaskFromDrawable -> CardMaskFromDrawable(
+                        imageRes = item.imageRes,
+                        maskRes = item.maskRes,
+                        modifier = item.modifier
+                    )
                     is CardGalleryItem.StaticMask -> CardImageMaskClip(
                         imageResource = item.imageRes,
                         imagePatterSvg = item.maskRes

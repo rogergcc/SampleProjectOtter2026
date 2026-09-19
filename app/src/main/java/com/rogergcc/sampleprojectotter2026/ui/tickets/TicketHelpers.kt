@@ -23,6 +23,13 @@ import kotlin.math.sin
 // 2. GEOMETRÍA Y HELPERS (GenericShape)
 // ==========================================
 
+//Usa la técnica de Vector / SVG / BlendMode cuando quieras formas artísticas complejas
+//(manchas orgánicas, siluetas de ciudades, letras perforadas tipo TOKYO).
+//
+//Usa Path manual (cubicTo/lineTo) cuando construyas
+//componentes UI estructurados que requieran parámetros dinámicos
+//(tickets, cupones, tarjetas con muescas o formas geométricas animables).
+
 fun Path.addSideNotch(x: Float, centerY: Float, radius: Float, isRightSide: Boolean) {
     val startAngle = if (isRightSide) -90f else 90f
     val rectLeft = if (isRightSide) x - radius else -radius

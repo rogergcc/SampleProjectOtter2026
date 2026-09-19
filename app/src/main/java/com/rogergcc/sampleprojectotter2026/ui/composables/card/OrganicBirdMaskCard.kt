@@ -1,6 +1,7 @@
 package com.rogergcc.sampleprojectotter2026.ui.composables.card
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
@@ -23,30 +25,31 @@ import com.rogergcc.sampleprojectotter2026.R
 
 @Composable
 fun OrganicBirdMaskCard(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    imageResource: Int = R.drawable.gouldian_finch_illustration
 ) {
     Box(
         modifier = modifier
             .size(250.dp)
-//            .background(Color.White)
+//            .background(Color.Black)
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
         // La imagen aplicando la máscara orgánica directa
         Image(
-            painter = painterResource(id = R.drawable.gouldian_finch_illustration), // Tu imagen del panel de pájaros
+            painter = painterResource(imageResource),
             contentDescription = "Pájaro con fondo de jungla",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
-                // AQUÍ SE APLICA EL EFECTO:
-                .clip(CustomOrganicShape2())
+                // here we apply the custom organic shape mask
+                .clip(CircleOrganicShape2())
         )
     }
 }
 
 // --- CLASE QUE CREA LA MÁSCARA ORGÁNICA PERSONALIZADA ---
-class CustomOrganicShape2 : Shape {
+class CircleOrganicShape2 : Shape {
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,
@@ -96,5 +99,7 @@ class CustomOrganicShape2 : Shape {
 @Preview(showBackground = true)
 @Composable
 fun PreviewOrganicBirdMaskCard() {
-    OrganicBirdMaskCard()
+    OrganicBirdMaskCard(
+        imageResource = R.drawable.gouldian_finch_illustration
+    )
 }

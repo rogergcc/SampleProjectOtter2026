@@ -337,7 +337,7 @@ fun TextImageMaskPosterAdjustedPreview() {
         topTag = "JAPAN",
         topTagLetterSpacing = 10.sp,
         title = "TOKYO",
-        titleLetterSpacing = (10.5).sp,
+        titleLetterSpacing = (9.5).sp,
         titleFontSize = 130.sp,
         subTitle = "LAND OF THE RISING SUN",
         imageRes = R.drawable.img_3,

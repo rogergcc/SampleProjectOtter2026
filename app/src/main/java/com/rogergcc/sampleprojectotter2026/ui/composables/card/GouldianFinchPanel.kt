@@ -69,7 +69,7 @@ fun GouldianFinchPanel(
                 alignment = Alignment.Center, // Enfoca el ave del lado derecho
                 modifier = Modifier
                     .fillMaxSize()
-                    .clip(CustomOrganicShape())
+                    .clip(CircleOrganicShape())
             )
         }
     }
@@ -137,7 +137,7 @@ fun FoliageBackground() {
 
 // --- DEFICIÓN DE LA FORMA PERSONALIZADA PARA LA MÁSCARA ORGÁNICA ---
 // Esto es mucho más limpio que definir formas XML raras.
-class CustomOrganicShape : Shape {
+class CircleOrganicShape : Shape {
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,
