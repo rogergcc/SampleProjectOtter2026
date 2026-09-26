@@ -32,6 +32,11 @@ val MontserratFontFamily = FontFamily(
 val ArchivoFontFamily = FontFamily(
     Font(R.font.archivoblack_regular, FontWeight.Normal)
 )
+val UbuntuFontFamily = FontFamily(
+    Font(R.font.ubuntu, FontWeight.Normal),
+        Font(R.font.ubuntu, FontWeight.Bold)
+)
+
 
 
 // 2. Definición centralizada de TextStyles predeterminados para Tickets

@@ -27,36 +27,29 @@ import kotlin.random.Random
 fun RandomGlitterOverlay(
     modifier: Modifier = Modifier,
     dotRadius: Dp = 1.5.dp,
-    densityFactor: Int = 180, // Cantidad de puntos dispersos
+    densityFactor: Int = 180,
     color: Color = Color.Black.copy(alpha = 0.25f),
     offsetXPx: Float = 0f,
     offsetYPx: Float = 0f,
-    seed: Long = 42L, // Mantiene la posición fija por ticket
+    seed: Long = 42L,
 ) {
-    // Generamos las posiciones "aleatorias" una sola vez mediante remember
     val points = remember(seed, densityFactor) {
         val rnd = Random(seed)
         List(densityFactor) {
-            // Coordenadas fijas normalizadas (0.0f a 1.0f)
             Pair(rnd.nextFloat(), rnd.nextFloat())
         }
     }
 
-    Canvas(modifier = modifier
-        .background(
-            Color(0xFF1A1A1A)
-        )
-        .fillMaxSize()) {
+    // Eliminamos .background(Color(0xFF1A1A1A)) de aquí
+    Canvas(modifier = modifier.fillMaxSize()) {
         val dotRadiusPx = dotRadius.toPx()
         val width = size.width
         val height = size.height
 
         points.forEach { (normalizedX, normalizedY) ->
-            // Mapeamos a píxeles + aplicamos el desplazamiento de la luz/giroscopio
             val baseX = normalizedX * width
             val baseY = normalizedY * height
 
-            // Efecto cíclico para que los puntos reaparezcan por el otro lado al inclinarse
             val x = (baseX + offsetXPx).mod(width)
             val y = (baseY + offsetYPx).mod(height)
 
@@ -84,41 +77,43 @@ fun RandomGlitterOverlayPreview() {
 }
 
 @Composable
-private fun DefaultGlitterGroup(
+fun DefaultGlitterGroup(
     pitchProvider: () -> Float,
     rollProvider: () -> Float,
     modifier: Modifier = Modifier,
 ) {
-
-
     Box(
         modifier = modifier
+//            .background(Color(0xFF9317A9)) // Fondo oscuro único para el grupo
     ) {
+        // Capa 1: Puntos púrpuras
         RandomGlitterOverlay(
             modifier = Modifier.matchParentSize(),
             dotRadius = 0.9.dp,
             densityFactor = 300,
-            color = Color(0xFFDE00FF).copy(alpha = 0.20f),
+            color = Color(0xFFDE2FFC).copy(alpha = 0.50f), // Incrementa un poco el alpha si deseas más contraste
             offsetXPx = rollProvider() * 2.2f,
             offsetYPx = pitchProvider() * 2.2f,
             seed = 101L
         )
 
+        // Capa 2: Puntos rosados
         RandomGlitterOverlay(
             modifier = Modifier.matchParentSize(),
             dotRadius = 1.7.dp,
             densityFactor = 180,
-            color = Color(0xFFFF0053).copy(alpha = 0.28f),
+            color = Color(0xFF0088FF).copy(alpha = 0.50f),
             offsetXPx = -rollProvider() * 1.4f,
             offsetYPx = -pitchProvider() * 1.4f,
             seed = 202L
         )
 
+        // Capa 3: Puntos verdes
         RandomGlitterOverlay(
             modifier = Modifier.matchParentSize(),
-            dotRadius = 3.2.dp,
+            dotRadius = 1.2.dp,
             densityFactor = 220,
-            color = Color(0xFF14FF22).copy(alpha = 0.22f),
+            color = Color(0xFFFAC113).copy(alpha = 0.40f),
             offsetXPx = rollProvider() * 1.6f,
             offsetYPx = -pitchProvider() * 1.6f,
             seed = 303L

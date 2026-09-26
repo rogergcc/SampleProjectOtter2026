@@ -350,7 +350,7 @@ private fun TicketContentLayoutDatFan(
                                 color = Color(0xFFFFEA00), // Color destacado (o de tu tema)
                                 shape = RoundedCornerShape(12.dp)
                             )
-                            .padding(horizontal = AppDimens.PaddingMedium, vertical = AppDimens.Padding3dp)
+                            .padding(horizontal = AppDimens.PaddingMedium, vertical = AppDimens.padding3dp)
                     ) {
                         Text(
                             text = zone.uppercase(),
@@ -570,44 +570,44 @@ private fun TicketContentLayoutDatFan(
 //    }
 //}
 
-@Composable
-private fun DefaultGlitterGroup(
-    pitchProvider: () -> Float,
-    rollProvider: () -> Float,
-    modifier: Modifier = Modifier
-) {
-    Box(modifier = modifier) {
-        RandomGlitterOverlay(
-            modifier = Modifier.matchParentSize(),
-            dotRadius = 0.9.dp,
-            densityFactor = 300,
-            color = Color(0xFFDE00FF).copy(alpha = 0.20f),
-            offsetXPx = rollProvider() * 2.2f,
-            offsetYPx = pitchProvider() * 2.2f,
-            seed = 101L
-        )
-
-        RandomGlitterOverlay(
-            modifier = Modifier.matchParentSize(),
-            dotRadius = 1.7.dp,
-            densityFactor = 180,
-            color = Color(0xFFFF0053).copy(alpha = 0.28f),
-            offsetXPx = -rollProvider() * 1.4f,
-            offsetYPx = -pitchProvider() * 1.4f,
-            seed = 202L
-        )
-
-        RandomGlitterOverlay(
-            modifier = Modifier.matchParentSize(),
-            dotRadius = 1.2.dp,
-            densityFactor = 220,
-            color = Color(0xFFFCFCFC).copy(alpha = 0.22f),
-            offsetXPx = rollProvider() * 1.6f,
-            offsetYPx = -pitchProvider() * 1.6f,
-            seed = 303L
-        )
-    }
-}
+//@Composable
+//private fun DefaultGlitterGroup(
+//    pitchProvider: () -> Float,
+//    rollProvider: () -> Float,
+//    modifier: Modifier = Modifier
+//) {
+//    Box(modifier = modifier) {
+//        RandomGlitterOverlay(
+//            modifier = Modifier.matchParentSize(),
+//            dotRadius = 0.9.dp,
+//            densityFactor = 300,
+//            color = Color(0xFFDE00FF).copy(alpha = 0.20f),
+//            offsetXPx = rollProvider() * 2.2f,
+//            offsetYPx = pitchProvider() * 2.2f,
+//            seed = 101L
+//        )
+//
+//        RandomGlitterOverlay(
+//            modifier = Modifier.matchParentSize(),
+//            dotRadius = 1.7.dp,
+//            densityFactor = 180,
+//            color = Color(0xFFFF0053).copy(alpha = 0.28f),
+//            offsetXPx = -rollProvider() * 1.4f,
+//            offsetYPx = -pitchProvider() * 1.4f,
+//            seed = 202L
+//        )
+//
+//        RandomGlitterOverlay(
+//            modifier = Modifier.matchParentSize(),
+//            dotRadius = 1.2.dp,
+//            densityFactor = 220,
+//            color = Color(0xFF8FF819).copy(alpha = 0.22f),
+//            offsetXPx = rollProvider() * 1.6f,
+//            offsetYPx = -pitchProvider() * 1.6f,
+//            seed = 303L
+//        )
+//    }
+//}
 
 
 @Composable

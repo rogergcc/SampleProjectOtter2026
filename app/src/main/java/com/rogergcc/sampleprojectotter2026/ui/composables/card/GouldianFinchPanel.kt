@@ -75,65 +75,7 @@ fun GouldianFinchPanel(
     }
 }
 
-@Composable
-fun MainAvesPanel(modifier: Modifier = Modifier) {
-    // Un Box para superponer las ramas y las aves
-    Box(
-        modifier = modifier
-            .background(Color(0xFF021B1C)) // El verde azulado oscuro
-            .clip(RoundedCornerShape(16.dp)) // Borde de la Card
-            .padding(16.dp)
-    ) {
-        // Imagen de fondo con las hojas y ramas (estilo Vectorial)
-        FoliageBackground()
 
-        // Ramas y Aves posicionadas con Offset (más preciso y dinámico)
-        GouldianFinch(modifier = Modifier.offset(x = 10.dp, y = 100.dp))
-        GouldianFinch(modifier = Modifier.offset(x = 100.dp, y = 20.dp), mirrored = true)
-        GouldianFinch(modifier = Modifier.offset(x = 220.dp, y = 150.dp))
-    }
-}
-
-@Composable
-fun BirdInOrganicMask(modifier: Modifier = Modifier) {
-    // Un Box que contiene el ave y el fondo oscuro
-    Box(
-        modifier = modifier
-            .background(Color(0xFF021B1C)) // Mismo fondo oscuro
-            .padding(8.dp) // Pequeño padding interno
-    ) {
-        // Solo un ave aquí
-        GouldianFinch(modifier = Modifier
-            .align(Alignment.Center)
-            .scale(0.8f))
-    }
-}
-
-// Composable simplificado para el ave
-@Composable
-fun GouldianFinch(
-    modifier: Modifier = Modifier,
-    mirrored: Boolean = false,
-) {
-    val scale = if (mirrored) -1f else 1f
-    Image(
-        painter = painterResource(id = R.drawable.gouldian_finch_illustration),
-        contentDescription = "Diamante de Gould",
-        modifier = modifier
-            .size(100.dp) // Tamaño
-            .scale(scaleX = scale, scaleY = 1f) // Voltear la imagen
-    )
-}
-
-@Composable
-fun FoliageBackground() {
-    Image(
-        painter = painterResource(id = R.drawable.foliage_pattern_dark),
-        contentDescription = null,
-        modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.Crop
-    )
-}
 
 // --- DEFICIÓN DE LA FORMA PERSONALIZADA PARA LA MÁSCARA ORGÁNICA ---
 // Esto es mucho más limpio que definir formas XML raras.

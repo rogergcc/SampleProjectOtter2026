@@ -11,13 +11,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 object AppDimens {
-    val Padding3dp: Dp = 3.dp
+    val padding3dp: Dp = 3.dp
     val dim300dp: Dp = 300.dp
     val PaddingSmall: Dp = 4.dp
     val PaddingMedium: Dp = 8.dp
     val PaddingLarge: Dp = 16.dp
     val TicketHorizontalPadding: Dp = 23.dp
     val TicketTopPadding: Dp = 18.dp
+    val dim340dp: Dp = 340.dp
+    val dim400dp: Dp = 400.dp
+    val dim450dp: Dp = 450.dp
 
     val MaxTicketWidth: Dp = 340.dp
     val FooterIllustrationHeight: Dp = 165.dp
