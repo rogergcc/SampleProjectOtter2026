@@ -1,17 +1,23 @@
 package com.rogergcc.sampleprojectotter2026.ui.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.rogergcc.sampleprojectotter2026.R
 
 // 1. Fuentes del proyecto
+
+val AntonScFontFamily = FontFamily(
+    Font(R.font.anton_sc_regular, FontWeight.Normal)
+)
+val RubicMonoOneFontFamily = FontFamily(
+    Font(R.font.rubik_mono_one_regular, FontWeight.Normal)
+)
 val OswaldFontFamily = FontFamily(
     Font(R.font.oswald_bold, FontWeight.Bold),
     Font(R.font.oswald_regular, FontWeight.Normal)
@@ -22,19 +28,48 @@ val MontserratFontFamily = FontFamily(
     Font(R.font.montserrat_black, FontWeight.Black)
 )
 
+
+val ArchivoFontFamily = FontFamily(
+    Font(R.font.archivoblack_regular, FontWeight.Normal)
+)
+val UbuntuFontFamily = FontFamily(
+    Font(R.font.ubuntu, FontWeight.Normal),
+        Font(R.font.ubuntu, FontWeight.Bold)
+)
+
+
+
 // 2. Definición centralizada de TextStyles predeterminados para Tickets
 object TicketTypography {
+    val FolioCode = TextStyle(
+        fontSize = AppDimens.Dim9sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.White.copy(alpha = 0.75f),
+        letterSpacing = 1.sp,
+//        fontFamily = MontserratFontFamily
+//        fontFamily = MontserratFontFamily
+
+    )
+    val Zone = TextStyle(
+        fontSize = AppDimens.Dim9sp,
+        fontWeight = FontWeight.ExtraBold,
+        color = Color.Black,
+        fontFamily = OswaldFontFamily
+
+    )
+
     val TourSubtitle = TextStyle(
         fontSize = 12.sp,
         fontWeight = FontWeight.Bold,
         letterSpacing = 1.5.sp,
         fontFamily = MontserratFontFamily
     )
-    val MainTitle = TextStyle(
-        fontSize = 36.sp,
-        fontWeight = FontWeight.Black,
-        fontFamily = OswaldFontFamily
-    )
+
+    //    val MainTitle = TextStyle(
+//        fontSize = 36.sp,
+//        fontWeight = FontWeight.Black,
+//        fontFamily = OswaldFontFamily
+//    )
     val EventDate = TextStyle(
         fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold,
@@ -51,12 +86,21 @@ object TicketTypography {
         // 0.75.em junta las dos líneas al máximo sin colapsar el cálculo del contenedor
         lineHeight = 0.75.em,
 
-    )
+        )
     val City = TextStyle(
         fontSize = 15.sp,
         fontWeight = FontWeight.ExtraBold,
         fontFamily = OswaldFontFamily
     )
+    val Fan = TextStyle(
+        fontSize = 10.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.White,
+        letterSpacing = 0.5.sp,
+        fontFamily = MontserratFontFamily,
+
+        )
+
 }
 
 // Set of Material typography styles to start with

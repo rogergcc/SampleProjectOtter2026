@@ -28,3 +28,4 @@ val GorillazSecondary = Color(0xFF2C0000)
 val GorillazTextLight = Color(0xFF5D1802)
 val GorillazGradientStart = Color(0xFFFF9D00)
 val GorillazGradientEnd = Color(0xFFE65100)
+
